@@ -15,6 +15,13 @@
         https://github.com/noise131
 """
 
+'''
+import os,sys
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(base_dir)
+sys.path.append(base_dir)
+'''
+
 import os
 import sys
 import logging
@@ -35,6 +42,7 @@ class file():
         file_path_handle = file.path_split(event_file_path)
         self.__file_path = file_path_handle[0]
         self.__file_name = file_path_handle[1]
+        self.dir_create()
         try:
             self.__file_fp = open(event_file_path, 'a')
         except Exception as e:
@@ -60,6 +68,11 @@ class file():
         file_path = ''.join([file_path, '/'])
         file_name = os.path.basename(path)
         return (file_path, file_name)
+
+    def dir_create(self) -> bool:
+        if not os.path.exists(self.__file_path):
+            os.mkdir(self.__file_path)
+        return True
 
     def event_write_file(self, content: list | str) -> bool:
         while True:
@@ -97,6 +110,5 @@ class file():
         return self.__rotate_lock
 
 if __name__ == '__main__':
-    test = file('./test.txt')
+    test = file('./event_log/test.txt')
     test.event_write_file('1')
-    ...
