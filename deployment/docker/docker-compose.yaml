@@ -1,0 +1,23 @@
+---
+version: '3.8'
+networks:
+  kube_events: 
+    driver: bridge
+    external: false
+services:
+  mongodb:
+    image: docker.io/library/mongo:6.0.1
+    restart: always
+    command: 
+      - "--config"
+      - "/etc/mongo/mongod.conf"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: kubeevents
+      MONGO_INITDB_ROOT_PASSWORD: kubeevents.123
+    volumes:
+      - ./data/db:/data/db
+      - ./data/configdb:/data/configdb
+      - ./mongod.conf:/etc/mongo/mongod.conf:ro
+    ports:
+      - 27017:27017
+...
