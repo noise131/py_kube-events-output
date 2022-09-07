@@ -27,19 +27,15 @@ class GlobalConfig():
     timezone: int = +8
 
     event_uid_cache_len: int = 500
-
     kube_cluster_name = 'k8s-d-cluster'
-
     kube_config_file = r'admin.conf'
-
     kube_timeout: int = 3
-
     kube_conn_wait: int = 60
 
     init: bool = False
 
     mongo_conn_info: dict = {
-        'host': '10.0.0.75',
+        'host': '127.0.0.1',
         'port': '27017',
         'username': 'kubeevents',
         'password': 'kubeevents.123',
@@ -51,7 +47,6 @@ class GlobalConfig():
     }
 
     event_record_file: str = 'event_log/event.log'
-
     output: list = ['file', 'elasticsearch', 'logstash']
 
 logger = logging.getLogger(GlobalConfig.project_name)
