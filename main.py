@@ -15,10 +15,12 @@
         https://github.com/noise131
 """
 
-from GlobalConfig import GlobalConfig
+
 import time
 import logging
 import json
+import sys
+from GlobalConfig import GlobalConfig
 from multiprocessing import Process, Queue
 from kube_event import event_collect
 from event_output import file, mongo, elastic
@@ -26,6 +28,10 @@ from threading import Thread
 
 if __name__ == '__main__':
     logger = logging.getLogger('{}.main'.format(GlobalConfig.project_name))
+    # TODO : 获取命令行参数初始化配置
+    # 以下为临时解决方案，待优化
+    if len(sys.argv) >= 2:
+        GlobalConfig.mongo_conn_info['host'] = sys.argv[1]
     event_queue = Queue(2000)
     event_mongo = mongo.mongo(**GlobalConfig.mongo_conn_info)
     if 'file' in GlobalConfig.output:
