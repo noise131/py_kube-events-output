@@ -95,7 +95,7 @@ class mongo():
             self.write_error(e)
             raise
 
-    # TODO : 对于多文档数据写入需要独立的集合存储自增 id
+    # TODO : 对于多文档一条语句 insert_many 写入需要独立的集合存储自增 id
     def doc_increase_id(self) -> int:
         try:
             select_r = self.mongo_coll.find().sort('_id', -1).limit(1)
