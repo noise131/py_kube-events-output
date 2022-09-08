@@ -58,6 +58,7 @@ class mongo():
         if not self.__mongo_connect_test(retry):
             raise Exception('mongodb 连接失败已达到最大重试次数 : {}'.format(retry))
 
+    # TODO : 待重构, 失败达到最大次数直接抛出异常
     def __mongo_connect_test(self, retry: int) -> bool:
         for i in range(retry):
             logger.info('尝试第 {} 次连接 mongodb'.format(i + 1))
@@ -80,6 +81,7 @@ class mongo():
 
     # TODO : 判断传参有效性, 列表 和 字典
     # TODO : 添加等待轮换锁功能
+    # TODO : 添加连接失败自动重连功能
     def doc_write_one(self, docs: list | dict):
         # id = self.doc_increase_id()
         docs = docs.copy()
@@ -95,7 +97,7 @@ class mongo():
             self.write_error(e)
             raise
 
-    # TODO : 对于多文档一条语句 insert_many 写入需要独立的集合存储自增 id
+    # 该功能暂时弃用
     def doc_increase_id(self) -> int:
         try:
             select_r = self.mongo_coll.find().sort('_id', -1).limit(1)

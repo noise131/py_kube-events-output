@@ -28,8 +28,7 @@ from threading import Thread
 
 if __name__ == '__main__':
     logger = logging.getLogger('{}.main'.format(GlobalConfig.project_name))
-    # TODO : 获取命令行参数初始化配置
-    # 以下为临时解决方案，待优化
+    # XXX : 获取命令行参数初始化配置
     if len(sys.argv) >= 2:
         GlobalConfig.mongo_conn_info['host'] = sys.argv[1]
     event_queue = Queue(2000)

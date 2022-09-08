@@ -96,7 +96,7 @@ class file():
                 logger.critical(''.join(['事件写入文件失败 : ', str(e)]))
                 return False
 
-    # TODO : 文件轮换
+    # TODO : 文件轮换功能
     def file_rotate(self) -> bool:
         self.__rotate_lock = True
         ...

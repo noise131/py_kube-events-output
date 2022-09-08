@@ -70,6 +70,8 @@ def event_collect(kube_conf_path: str, event_q: Queue, kube_cluster_name: str,
             break
         try:
             logger.info('开始监听事件')
+            # BUG : 持续监听过程中 k8s 意外关闭会导致一直阻塞
+            # 缺少超时配置 w.stream(x, timeout_seconds=60, _request_timeout=60)
             for event in w.stream(v1.list_event_for_all_namespaces):
                 # print(event)
                 try:
