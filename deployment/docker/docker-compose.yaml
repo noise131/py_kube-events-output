@@ -18,6 +18,16 @@ services:
       - ./data/db:/data/db
       - ./data/configdb:/data/configdb
       - ./mongod.conf:/etc/mongo/mongod.conf:ro
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
+  kube-events-output:
+    image: noi1031/py_kube-events-outputs:latest
+    restart: always
+    depends_on:
+      - mongodb
+    command:
+      - "mongodb"
+    volumes:
+      - ./admin.conf:/kube-events-output/admin.conf:ro
+      - ./event_log:/kube-events-output/event_log
 ...
